@@ -6,5 +6,6 @@ using namespace std;
 void MySwap(string &a, string &b) {
     string temp = a;
     a = b;
-    b = temp;
+    b = temp; 
 }
+
