@@ -1,4 +1,3 @@
-#include <iostream>
 
 typedef struct {
     int width;
