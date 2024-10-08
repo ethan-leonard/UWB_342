@@ -5,6 +5,7 @@
 #include "mySwap.h"
 #include "findMax.h"
 #include "rectangle.h"
+#include "playingCard.h"
 
 using namespace std;
 
@@ -26,5 +27,9 @@ int main() {
     r.height = 20;
     
     cout << "Area: " << findArea(r) << endl;
+
+    playingCard G;
+
+    cout << G << endl;
 }
 

@@ -4,10 +4,10 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 enum Suit {kHeart, kDiamond, kClub, kSpade};
 const string kSUITS[4] = {"heart", "diamond", "club", "spade"};
-
-using namespace std;
 
 class playingCard {
     private:
@@ -22,6 +22,9 @@ class playingCard {
         // Getters
         int getNumber() const;
         Suit getSuit() const;
+
+        // Operator Overloads
+        friend ostream& operator<<(ostream& stream, const playingCard& card);
 
 };
 
