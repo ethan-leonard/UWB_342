@@ -33,9 +33,17 @@ bool Rational::setValue(int top, int bottom) {
 
 // Functions
 
-Rational Rational::Multiply(Rational& rat) const {
+Rational Rational::operator*(const Rational& rat) const {
     Rational tmp;
     tmp.top_ = rat.top_ * top_;
     tmp.bottom_ = rat.bottom_ * bottom_;
     return tmp;
 } 
+
+Rational Rational::operator+(const Rational& rat) const {
+    Rational tmp;
+    tmp.top_ = (Rational::top_ * rat.bottom_) + (rat.top_ * Rational::bottom_);
+    tmp.bottom_ = Rational::bottom_ * rat.bottom_;
+    return tmp;
+} 
+

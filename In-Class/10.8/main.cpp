@@ -19,10 +19,12 @@ int main() {
     std::string j = "hello";
     std::cout << reverseString(j) << std::endl;
 
-    Rational r(1, 10);
+    Rational r(1, 4);
+    Rational r2(1, 4);
 
-    std::cout << r.getTop() << "/" << r.getBottom() << std::endl;
+    Rational r3 = r+r2;
 
+    std::cout << r3.getTop() << "/" << r3.getBottom() << std::endl;
 
     return 0;
 }

@@ -18,11 +18,13 @@ class Rational {
         // Setters
         bool setValue(int top, int bottom);
 
-        // Functions
-        Rational Multiply(Rational& rat) const;
-        Rational Divide(Rational& rat) const;
-        Rational Add(Rational& rat) const;
-        Rational Subtract(Rational& rat) const;
+        // Operator overloads
+        Rational operator*(const Rational& rat) const;
+        Rational operator/(const Rational& rat) const;
+        Rational operator+(const Rational& rat) const;
+        Rational operator-(const Rational& rat) const;
+
+        
 
     private:
         // Values
