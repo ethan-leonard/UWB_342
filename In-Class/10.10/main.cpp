@@ -1,12 +1,20 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Foo.h"
+
 
 Foo obj_global("");
 
 void MyFunc();
 
 int main() {
+    std::vector<int> first;
+    std::vector<int> second = {100, 200, 300};
+    std::vector<int> third = second;
+    std::vector<int> fourth{4, 100};
+    second.push_back(400);
+
     Foo object_local_a("local");
     
     for (int i = 1; i <= 3; i++) {
