@@ -47,3 +47,33 @@ Rational Rational::operator+(const Rational& rat) const {
     return tmp;
 } 
 
+Rational Rational::operator-(const Rational& rat) const {
+    Rational tmp;
+    tmp.top_ = (Rational::top_ * rat.bottom_) - (rat.top_ * Rational::bottom_);
+    tmp.bottom_ = Rational::bottom_ * rat.bottom_;
+    return tmp;
+
+}
+
+Rational Rational::operator/(const Rational& rat) const {
+    Rational tmp;
+    Rational tmp2(rat.bottom_, rat.top_);
+
+    tmp.top_ = tmp2.top_ * Rational::top_;
+    tmp.bottom_ = tmp2.bottom_ * Rational::bottom_;
+
+    return tmp;
+
+}
+
+Rational& Rational::operator*=(const Rational& rat) {
+    Rational::top_ = Rational::top_ * rat.top_;
+    Rational::bottom_ = Rational::bottom_ * rat.bottom_;
+    return *this;
+}
+
+// Friend function for output stream
+ostream& operator<<(ostream& os, const Rational& rat) {
+    os << rat.getTop() << "/" << rat.getBottom();
+    return os;
+}

@@ -24,6 +24,10 @@ class Rational {
         Rational operator+(const Rational& rat) const;
         Rational operator-(const Rational& rat) const;
 
+        Rational& operator*=(const Rational& rat);
+
+        // Friend function for output stream
+        friend ostream& operator<<(ostream& os, const Rational& rat);
         
 
     private:
