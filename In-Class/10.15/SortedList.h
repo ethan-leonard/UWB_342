@@ -17,9 +17,8 @@ class SortedList {
         // Getters and Setters
         void add(const T& item);
         void print() const;
-        void sort();
-
-    
+        void sort(); // bubble sort
+        void isort(); // insertion sort
     
 };
 
