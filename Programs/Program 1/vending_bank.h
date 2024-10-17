@@ -15,6 +15,8 @@ class VendingBank {
         int quarters_;
         int dollarCoins_;
 
+        // Functions
+        void reset(); // Resets the machine's and customer's balances
         
     public:
         // Constructor 
@@ -42,10 +44,9 @@ class VendingBank {
         bool getDollarCoins(int dollarCoins);
         
         // Functions
-        void insertCoin(std::string type, int count); // Takes coin type * amount and adds it to the customer's balance
+        void insertCoin(int pennies, int nickels, int dimes, int quarters, int dollarCoins); // Takes coin type * amount and adds it to the customer's balance
         bool hasChange(double amount); // Checks the machine balance to see if there is enough money for change
         bool dispenseChange(double amount); // Removes the amount from the machine balance 
-        void reset(); // Resets the machine's and customer's balances
 
         bool inStock(std::string item); // Checks if item is available
         bool canAfford(std::string item); // Checks if customer's balance is enough for an item
