@@ -97,7 +97,6 @@ TimeSpan &TimeSpan::operator-=(const TimeSpan &obj) {
     return *this;
 }
 
-
 bool TimeSpan::operator==(const TimeSpan &obj) const {
     if (obj.seconds_ == seconds_ && obj.minutes_ == minutes_ && obj.hours_ == hours_) {
         return true;

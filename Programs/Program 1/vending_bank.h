@@ -19,12 +19,27 @@ class VendingBank {
     public:
         // Constructor 
         VendingBank(); // Default constructor 
-        VendingBank(int id); // Constructor that allows you to set ID
+        VendingBank(int id); // Sets ID for machine
+        VendingBank(int id, int pennies, int nickels, int dimes, int quarters, int dollarCoins); // Constructor that allows you to set values
 
         // Getters and Setters
         int getId() const; // returns the ID for this machine
         double getMachineBalance() const; // Returns the total of the money in the machine
         double getCustomerBalance() const; // Returns the customer's current balance
+
+        // Getters for all the coins
+        int getPennies() const; 
+        int getNickels() const;
+        int getDimes() const;
+        int getQuarters() const;
+        int getDollarCoins() const;
+
+        // Setters for all the coins
+        bool getPennies(int pennies); 
+        bool getNickels(int nickels);
+        bool getDimes(int dimes);
+        bool getQuarters(int quarters);
+        bool getDollarCoins(int dollarCoins);
         
         // Functions
         void insertCoin(std::string type, int count); // Takes coin type * amount and adds it to the customer's balance

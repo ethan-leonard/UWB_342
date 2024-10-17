@@ -18,6 +18,8 @@ int main() {
     names.add("Money");
     names.add("Joseph");
     names.add("Yessuh");
+    names.add("Superduperlongname");
+    names.add("Hi");
     names.sort();
     names.print();
 

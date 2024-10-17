@@ -50,7 +50,7 @@ void SortedList<T>::isort() {
         // to one position ahead of their current position
         while (j >= 0 && list_[j] > key) {
             list_[j + 1] = list_[j];
-            j = j - 1;
+            j--;
         }
         list_[j + 1] = key;
     }
