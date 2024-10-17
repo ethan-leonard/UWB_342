@@ -54,7 +54,7 @@ class VendingBank {
         
         // Overload 
         friend std::ostream& operator<<(std::ostream& stream, const VendingBank& bank); // For cout
-
+        bool operator==(const VendingBank& bank) const;
 };
 
 
