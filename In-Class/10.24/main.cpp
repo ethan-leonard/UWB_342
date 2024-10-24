@@ -1,7 +1,8 @@
 #include <iostream>
+#include "bird.h"
 
 // dosen't work
-std::string convertBinary(int num) {
+/* std::string convertBinary(int num) {
     std::string s = "";
     if (num <= 0) {
         return "0";
@@ -12,7 +13,7 @@ std::string convertBinary(int num) {
         convertBinary(num/2);
     }
     return s;
-} 
+} */
 
 bool printBase(int num, int base, std::string &answer) {
     std::string static kDigitArrary = "0123456789ABCDEF";
@@ -27,7 +28,20 @@ bool printBase(int num, int base, std::string &answer) {
     } return true;
 }
 
+Bird* createFlock(int num, std::string name) {
+    Bird* pBird;
+    pBird = new Bird[num];
+
+    for (int i = 0; i < num; i++) {
+        pBird[i].set_name(name);
+        pBird[i].set_id(i);
+    }
+    return pBird;
+}
+
 int main() {
+
+
     int num = 1957;
     std::string answer;
     printBase(num, 2, answer);
