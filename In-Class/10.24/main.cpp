@@ -75,6 +75,10 @@ int binarySearch(int arr[], int low, int high, int x)
   return -1;
 } */
 
+int comboSweets(int days, int sweets) {
+    
+}
+
 int main() {
     int num = 1957;
     std::string answer;
