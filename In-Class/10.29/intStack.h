@@ -18,6 +18,8 @@
             // Actions
             bool push(int value);
             bool pop(int& value);
+            bool insert(int value);
+            bool remove(int value);
 
             // Overloads 
             friend std::ostream& operator<<(std::ostream& stream, const IntStack& st);
