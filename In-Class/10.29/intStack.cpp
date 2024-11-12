@@ -61,7 +61,7 @@ bool IntStack::insert(int value) {
 
 bool IntStack::remove(int value) {
     if (head_ == nullptr) {
-        return false; // Stack is empty
+        return false; 
     }
 
     // If the node to be removed is the head node
