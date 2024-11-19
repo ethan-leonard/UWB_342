@@ -108,8 +108,28 @@ void quickSort(std::vector<int>& vec, int first, int last) {
 
 }
 
-void shellSort(std::vector<int>& vec, int gap) {
+void shellSort(std::vector<int>& vec) {
+    int size = vec.size();
+    for (int gap = size /2; gap > 0; gap /= 2) {
+        for (int i = gap; i < size; i += 1) {
+            int tmp = vec[i];
+            int j;
+            for (j = i; j >= gap && vec[j - gap] > tmp; j -= gap) {
+                vec[j] = vec[j - gap];
+            }
+            vec[j] = tmp;
+        }
+    }
+}
 
+void countSort(std::vector<int>& vec, int exp) {
+    int n = vec.size();
+    std::vector<int> output(n);
+    int count[10] = {0}; // Count Array
+
+    for (int i = 0; i < n; i++) {
+        int digit = (vec[i] / exp);
+    }
 }
 
 int main() {
@@ -121,10 +141,10 @@ int main() {
 
     std::vector<int> my_vec = {81, 87, 90, 91, 96, 109, 11, 4, 12, 43};
 
-    quickSort(my_vec, 0, 9);
+    shellSort(my_vec);
 
-    std::cout << "Quick Sorted Array: ";
-    for (int i = 0; i < length; ++i) {
+    std::cout << "Shell Sorted Array: ";
+    for (int i = 0; i < my_vec.size(); i++) {
         std::cout << my_vec[i] << " ";
     }
     std::cout << std::endl;
