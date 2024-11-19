@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
 
 /* int* mergeSort(int* arr1, int* arr2, int length) {
 
@@ -129,6 +131,36 @@ void countSort(std::vector<int>& vec, int exp) {
 
     for (int i = 0; i < n; i++) {
         int digit = (vec[i] / exp);
+        digit = digit % 10;
+        count[digit]++;
+    }
+
+    // transforming count array to store cumulative counts
+    for (int i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+
+    // convert comulative counts frequencies into positions
+    for (int i = n - 1; i >= 0; i--) {
+        // traversing from the end
+        int digit = (vec[i] / exp) % 10;
+        output[count[digit] - 1] = vec[i];
+        count[digit]--;
+    }
+
+    // copy the sorted numbers back to the original vector
+    for (int i = 0; i < n; i++) {
+        vec[i] = output[i];
+    }
+}
+
+void radixSort(std::vector<int>& vec) {
+    // finding the maxium element in the vector to know number of digits
+    int maxN = *std::max_element(vec.begin(), vec.end());
+
+    // perform counting of each digit
+    for (int exp = 1; maxN / exp > 0; exp = exp * 10) {
+        countSort(vec, exp);
     }
 }
 
@@ -141,7 +173,7 @@ int main() {
 
     std::vector<int> my_vec = {81, 87, 90, 91, 96, 109, 11, 4, 12, 43};
 
-    shellSort(my_vec);
+    radixSort(my_vec);
 
     std::cout << "Shell Sorted Array: ";
     for (int i = 0; i < my_vec.size(); i++) {
