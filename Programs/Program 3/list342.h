@@ -14,12 +14,12 @@ struct Node {
 template <class T>
 class List342 {
     private:
-
         Node<T>* head_;
 
     public:
         List342();
         ~List342();
+        List342(const List342<T>& other);
 
         // Builds an order list from objects in an file
         bool BuildList(std::string file_name);
@@ -60,6 +60,13 @@ List342<T>::List342() {
     head_ = nullptr;
 }
 
+// Copy constructor
+template <class T>
+List342<T>::List342(const List342& list) {
+    head_ = nullptr;
+    *this = list; 
+}
+
 // Deconstructor 
 template <class T> 
 List342<T>::~List342() {
@@ -88,43 +95,41 @@ bool List342<T>::BuildList(std::string file_name) {
 }
 
 template <class T>
-bool List342<T>::Insert(T* val) {
-    if(val == nullptr){
-        return false;  
+bool List342<T>::Insert(T* obj) {
+    if (obj == nullptr) {
+        return false;
     }
 
-    Node<T>* cursor = head_;
+    T* new_obj = new T(*obj); 
+    Node<T>* new_node = new Node<T>{new_obj, nullptr};
 
-    while (curr != nullptr) {
-        if (*(cursor->data) == *val) {
-            return false; 
+    if (head_ == nullptr || *(head_->data) > *new_obj) {
+        if (head_ != nullptr && *(head_->data) == *new_obj) {
+            delete new_node; 
+            delete new_obj; 
+            return false;
         }
-        cursor = curr->next;
-    }
-
-    Node<T>* insert_node = new Node<T>;
-    insert_node->data = new T(*val);
-
-    if (head_ == nullptr || *val < *(head_->data)) {
-        insert_node->next = head_;
-        head_ = insert_node;
+        new_node->next = head_;
+        head_ = new_node;
         return true;
     }
 
-    Node<T>* prev = nullptr;
-    cursor = head_;
-    while (cursor != nullptr && *(cursor->data) < *val) {
-        prev = cursor;
-        cursor = curr->next;
+    Node<T>* current = head_;
+    Node<T>* previous = nullptr;
+    while (current != nullptr && *(current->data) < *new_obj) {
+        previous = current;
+        current = current->next;
     }
-    if(prev == nullptr){
-        delete insert_node->data;
-        delete insert_node;
 
-    }else{
+    if (current != nullptr && *(current->data) == *new_obj) {
+        delete new_node; 
+        delete new_obj; 
+        return false;
+    }
 
-    insert_node->next = cursor;
-    prev->next = insert_node;
+    new_node->next = current;
+    if (previous != nullptr) {
+        previous->next = new_node;
     }
     return true;
 }
@@ -218,72 +223,46 @@ void List342<T>::DeleteList() {
 
 template <class T>
 bool List342<T>::Merge(List342& list1) {
-    if (this == &list1 || list1.head_ == nullptr) {
-        return false;
+    if (this == &list1 || !list1.head_) return false;
+    if (!head_) { head_ = list1.head_; list1.head_ = nullptr; return true; }
+
+    Node<T> dummy;
+    Node<T>* tail = &dummy;
+    Node<T>* a = head_;
+    Node<T>* b = list1.head_;
+
+    while (a && b) {
+        if (*(a->data) < *(b->data)) {
+            tail->next = a;
+            a = a->next;
+        }
+        else if (*(b->data) < *(a->data)) {
+            tail->next = b;
+            b = b->next;
+        }
+        else {
+            tail->next = a;
+            a = a->next;
+            delete b->data;
+            Node<T>* temp = b;
+            b = b->next;
+            delete temp;
+        }
+        tail = tail->next;
     }
 
-    Node<T>* current1 = head_;
-    Node<T>* current2 = list1.head_;
-    Node<T>* previous1 = nullptr;
-
-    while (current2 != nullptr) {
-        Node<T>* next2 = current2->next;
-
-        while (current1 != nullptr && *(current1->data) < *(current2->data)) {
-            previous1 = current1;
-            current1 = current1->next;
-        }
-
-        if (current1 != nullptr && *(current1->data) == *(current2->data)) {
-            current2 = next2;
-            continue;
-        }
-
-        if (previous1 == nullptr) {
-            current2->next = head_;
-            head_ = current2;
-        } else {
-            previous1->next = current2;
-            current2->next = current1;
-        }
-        previous1 = current2;
-        current2 = next2;
-    }
-
+    tail->next = a ? a : b;
+    head_ = dummy.next;
     list1.head_ = nullptr;
     return true;
 }
 
+
 template <class T>
-List342<T> List342<T>::operator+(const List342<T>& list) const {
-    List342<T> result;
-    Node<T>* current1 = head_;
-    Node<T>* current2 = list.head_;
-
-    while (current1 != nullptr && current2 != nullptr) {
-        if (*(current1->data) < *(current2->data)) {
-            result.Insert(new T(*(current1->data)));
-            current1 = current1->next;
-        } else if (*(current2->data) < *(current1->data)) {
-            result.Insert(new T(*(current2->data)));
-            current2 = current2->next;
-        } else {
-            result.Insert(new T(*(current1->data)));
-            current1 = current1->next;
-            current2 = current2->next;
-        }
-    }
-
-    while (current1 != nullptr) {
-        result.Insert(new T(*(current1->data)));
-        current1 = current1->next;
-    }
-
-    while (current2 != nullptr) {
-        result.Insert(new T(*(current2->data)));
-        current2 = current2->next;
-    }
-
+List342<T> List342<T>::operator+(const List342<T> &list) const {
+    List342<T> temp = list;
+    List342<T> result = *this;
+    result.Merge(temp);
     return result;
 }
 
@@ -309,24 +288,37 @@ bool List342<T>::operator==(const List342<T>& list) const {
 
 template <class T>
 List342<T>& List342<T>::operator=(const List342<T>& list) {
-    if (this == &list) {
-        return *this;
-    }
+    if (this == &list) return *this; 
 
-    DeleteList();
+    DeleteList(); 
 
     Node<T>* current = list.head_;
+    Node<T>* last = nullptr;
+
     while (current != nullptr) {
-        Insert(new T(*(current->data)));
+        Node<T>* new_node = new Node<T>{
+            new T(*(current->data)), 
+            nullptr
+        };
+
+        if (head_ == nullptr) {
+            head_ = new_node; 
+        } else {
+            last->next = new_node; 
+        }
+
+        last = new_node; 
         current = current->next;
-    } return *this;
+    }
+
+    return *this;
 }
 
 template <class U>
 std::ostream &operator <<(std::ostream& stream, const List342<U> &list) { 
     Node<U>* cursor = list.head_;
     while(cursor != nullptr) {
-        stream << *(cursor->data); //print data individually
+        stream << *(cursor->data); 
         cursor = cursor->next;
     }return stream;
 }
