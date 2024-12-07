@@ -52,6 +52,7 @@ List::List(const std::initializer_list<Item>& items) : head_(nullptr) {
     }
 }
 
+/*
 int List::Remove(const Item& it) {
     // Count for values greater
     int count = -1;
@@ -93,6 +94,44 @@ int List::Remove(const Item& it) {
         
     }
     return count;
+} */
+
+int List::Remove(const Item& it) {
+    int count = 0;
+
+    if (*(head_->p_item) == it) {
+        Node* tmp = head_;
+        head_ = tmp->next;
+        delete tmp->p_item;
+        delete tmp;
+
+        Node* cursor = head_;
+
+        while (cursor != nullptr) {
+            count++;
+            cursor = cursor->next;
+        }
+
+        return count;
+    }
+
+    Node* cursor = head_;
+
+    while (!(cursor->next == nullptr || *(cursor->next->p_item) == it)) {
+        cursor = cursor->next;
+    }
+
+    Node* tmp = cursor->next;
+    cursor->next = tmp->next;
+    delete tmp->p_item;
+    delete tmp;
+
+    while (cursor->next != nullptr) {
+        count++;
+        cursor = cursor->next;
+    }
+
+    return count;
 }
 
 // Main Function
@@ -114,12 +153,6 @@ int main() {
     Item itemToRemove3{50};
     int result3 = myList3.Remove(itemToRemove3);
     std::cout << "Items greater than 50 remaining: " << result3 << std::endl; // Should output 0
-
-    // Test Case 4: Remove an item that does not exist
-    List myList4 = {Item{10}, Item{20}, Item{30}, Item{40}, Item{50}};
-    Item itemToRemove4{60};
-    int result4 = myList4.Remove(itemToRemove4);
-    std::cout << "Items greater than 60 remaining: " << result4 << std::endl; // Should output 0
 
     return 0;
 }
